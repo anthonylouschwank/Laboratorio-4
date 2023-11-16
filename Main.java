@@ -4,11 +4,107 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Scanner;
 
 public class Main {
     public static void main(String[] args){
-        List<Base> MovList = new ArrayList<>();
-        List<Usuario> UsuarioList = new ArrayList<>();
+        List<Base> MovList = leerCSVMov("Movimientos.csv");
+        List<Usuario> UsuarioList = leerCSVUsuario("Usuarios.csv");
+        boolean terminado = false;
+        Scanner sca = new Scanner(System.in);
+
+        while(!terminado){
+            System.out.println("---------------------------------");
+            System.out.println("Bienvenido al sistema de aerolineas UVG! Eliga de las siguientes opciones!");
+            System.out.println("1. Agregar usuario");
+            System.out.println("2. Agendar un vuelo");
+            System.out.println("3. Salir del Sistema");
+            System.out.println("---------------------------------");
+            int ans = sca.nextInt();
+
+            if(ans == 1){
+                Usuario nuevo = new Usuario(null, null, null);
+                System.out.println("---------------------------------");
+                System.out.println("Entrando a Sistema de Creacion de Usuario");
+                System.out.println("---------------------------------");
+                System.out.println("Cual desea que sea el nombre asignado?");
+                sca.nextLine();
+                String nombre = sca.nextLine();
+                nuevo.setNombre(nombre);
+                System.out.println("---------------------------------");
+                System.out.println("Escriba la clave que desea usar");
+                String contrasena = sca.nextLine();
+                nuevo.setContrasena(contrasena);
+                System.out.println("---------------------------------");
+                System.out.println("Cual es el plan que piensa usar para el Usuaio " + nombre + "?");
+                System.out.println("1. Basica");
+                System.out.println("2. VIP");
+                int ans1 = sca.nextInt();
+
+                if(ans1 == 1){
+                    nuevo.setPlan("Basico");
+                } 
+                else if(ans == 2){
+                    nuevo.setPlan("VIP");
+                }
+                else {
+                    System.out.println("Opcion invalida!");
+                }
+                UsuarioList.add(nuevo);
+            }
+
+            else if(ans == 2){
+                System.out.println("---------------------------------");
+                System.out.println("Entrando a Sistema de Agenda de Vuelos");
+                System.out.println("---------------------------------");
+                System.out.println("Cual es el usuario?");
+                String usuario = sca.nextLine();
+                System.out.println("Cual es su clave?");
+                String clave = sca.nextLine();
+                for(Usuario elemento : UsuarioList){
+                    if(elemento.getNombre().equals(usuario) && elemento.getContrasena().equals(clave)){
+                        if(elemento.getPlan().equals("Basico")){
+                            System.out.println("---------------------------------");
+                            System.out.println("Se identifico al usuario como plan Basico");
+                            System.out.println("Desea subir de nivel de su plan y convertirse en VIP?");
+                            System.out.println("1. Si");
+                            System.out.println("2. No");
+                            System.out.println("---------------------------------");
+                            int ans2 = sca.nextInt();
+                            if(ans2 == 1){
+                                elemento.setPlan("VIP"); //Aqui empieza logica de vuelos
+
+                            }
+                            if(ans2 == 2){
+                                System.out.println("Te lo pierdes bro");
+                            }
+
+                        } 
+                        if(elemento.getPlan().equals("VIP")){
+                            System.out.println("---------------------------------");
+                            System.out.println("Se identifico al usuario como plan VIP");
+                            System.out.println("Esta parte del codigo no me fue asignada, pero gracias por intentar igual :)");
+                        }
+
+                    }
+                }
+
+
+
+            }
+
+            else if(ans == 3){
+                terminado = true;
+                System.out.println("Saliendo del sistema...");
+                escribirCSVMovs(MovList, "Movimientos.csv");
+                escribirCSVUsuario(UsuarioList, "Usuarios.csv");
+            }
+
+            else {
+                System.out.println("Opcion invalida!");
+            }
+        }
+
     }
     public static ArrayList<Base> leerCSVMov(String nombreArchivo) {
         ArrayList<Base> MovList = new ArrayList<>();
