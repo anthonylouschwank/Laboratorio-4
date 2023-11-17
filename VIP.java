@@ -91,7 +91,7 @@ public class VIP implements Base {
     }
 
     @Override
-    public void setCuotas(){
+    public void setCuotas(int ValorInt){
         this.Cuotas = 1;
     }
 

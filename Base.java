@@ -6,7 +6,7 @@ public interface Base{
     public void setAerolinea(String ValorString);
     public void setTarjeta(String ValorString);
     public void ModificarContra();
-    public void setCuotas();
+    public void setCuotas(int ValorInt);
     public void setClaseVuelo(String ValorString);
     public void AsignacionAsiento(int ValorInt);
     public void setNumMaleta(int ValorInt);

@@ -1,3 +1,4 @@
+import java.util.Random;
 public class Basico implements Base {
     
     private String VueloInicio;
@@ -9,8 +10,9 @@ public class Basico implements Base {
     private String ClaseVuelo;
     private int Asiento;
     private int Maletas;
+    private boolean Cupon;
 
-    public Basico(String VueloInicio, String VueloFinal, int Boletos, String Aerolinea, String Tarjeta, int Cuotas, String ClaseVuelo, int Asiento, int Maletas){
+    public Basico(String VueloInicio, String VueloFinal, int Boletos, String Aerolinea, String Tarjeta, int Cuotas, String ClaseVuelo, int Asiento, int Maletas, boolean Cupon){
         this.VueloInicio = VueloInicio;
         this.VueloFinal = VueloFinal;
         this.Boletos = Boletos;
@@ -20,6 +22,7 @@ public class Basico implements Base {
         this.ClaseVuelo = ClaseVuelo;
         this.Asiento = Asiento;
         this.Maletas = Maletas;
+        this.Cupon = Cupon;
     }
 
     
@@ -59,6 +62,10 @@ public class Basico implements Base {
         return Maletas;
     }
 
+    boolean getCupon(){
+        return Cupon;
+    }
+
 
     @Override
     public void setVueloInicio(String ValorString){
@@ -91,22 +98,28 @@ public class Basico implements Base {
     }
 
     @Override
-    public void setCuotas(){
-        this.Cuotas = 1;
+    public void setCuotas(int ValorInt){
+        this.Cuotas = ValorInt;
     }
 
     @Override
     public void setClaseVuelo(String ValorString){
-        this.ClaseVuelo = "VIP";
+        this.ClaseVuelo = ValorString;
     }
 
     @Override
     public void AsignacionAsiento(int ValorInt){
-        this.Asiento = ValorInt;
+        Random random = new Random();
+        int Aleatorio = random.nextInt(50 - ValorInt + 1) - ValorInt;
+        this.Asiento = Aleatorio;
     }
 
     @Override
     public void setNumMaleta(int ValorInt){
         this.Maletas = ValorInt;
+    }
+
+    public void setCupon(boolean ValorBool){
+        this.Cupon = ValorBool;
     }
 }
