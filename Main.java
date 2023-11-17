@@ -24,7 +24,7 @@ public class Main {
             int ans = sca.nextInt();
 
             if(ans == 1){
-                Usuario nuevo = new Usuario(null, null, null);
+                Usuario nuevo = new Usuario(null, null, null, false);
                 System.out.println("---------------------------------");
                 System.out.println("Entrando a Sistema de Creacion de Usuario");
                 System.out.println("---------------------------------");
@@ -80,6 +80,9 @@ public class Main {
                             }
                             if(ans2 == 2){
                                 Basico movimiento = new Basico("", "", 0, "", "", 0, "", 0, 0, false);
+                                if(elemento.getCupon() == true){
+                                    movimiento.setCupon(true);
+                                }
                                 System.out.println("----------------Basico-----------------");
                                 System.out.println("Te lo pierdes bro");
                                 System.out.println("Acaso tu viaje es de ida y vuelta o solo ida?");
@@ -185,6 +188,11 @@ public class Main {
                                         System.out.println("Cuotas                " + movimiento.getCuotas());
                                         System.out.println("Clase de vuelo        " + movimiento.getClaseVuelo());
                                         System.out.println("Asiento               " + movimiento.getAsiento());
+                                        if(movimiento.getCupon() == true){
+                                            System.out.println("Cupon activado!");
+                                        } else {
+                                            System.out.println("Cupon no activado!");
+                                        }
                                         MovList.add(movimiento);
                                         terminado2 = true;
                                     }
@@ -211,9 +219,39 @@ public class Main {
                 String clave = sca.nextLine();
                 for(Usuario elemento : UsuarioList){
                     if(elemento.getNombre().equals(usuario) && elemento.getContrasena().equals(clave)){
-                        System.out.println("Usuario encontrado, que desea editar de el?");
+                        System.out.println("Usuario encontrado...");
+                        System.out.println("--------------Editor Usuarios-------------------");
+                        System.out.println("1. Editar Clave");
+                        System.out.println("2. Habilitar/Deshabilitar Cupon");
+                        System.out.println("3. Salir");
+                        int ans6 = sca.nextInt();
+                        boolean terminado3 = false;
+                        while(!terminado3){
+                            if(ans6 == 1){
+                                System.out.println("Cual es la nueva clave?");
+                                sca.nextLine();
+                                String contra = sca.nextLine();
+                                elemento.setContrasena(contra);
+                            } else if(ans6 == 2){
+                                System.out.println("Desea activar su cupon?");
+                                System.out.println("1. Si");
+                                System.out.println("2. No");
+                                int ans7 = sca.nextInt();
+                                if(ans7 == 1){
+                                    elemento.setCupon(true);
+                                } else if(ans7 == 2){
+                                    elemento.setCupon(false);
+                                } else {
+                                    System.out.println("Valor invalido, asumiendo no");
+                                    elemento.setCupon(false);
+                                }
+                            } else if(ans6 == 3){
+                                terminado3 = true;
+                            }
+                        }
+                        
                     } else {
-
+                        System.out.println("Usuario no encotrado, revise que este bien escrito");
                     }
                 }
 
@@ -266,7 +304,7 @@ public class Main {
     
                 if (partes.length == 3) { 
                     // Crear una instancia de Usuario utilizando el constructor
-                    Usuario usuario = new Usuario(partes[0].trim(), partes[1].trim(), partes[2].trim());
+                    Usuario usuario = new Usuario(partes[0].trim(), partes[1].trim(), partes[2].trim(), Boolean.parseBoolean(partes[3].trim()));
     
                     // Agregar el objeto Usuario a la lista
                     usuarioList.add(usuario);
